@@ -28,7 +28,7 @@ namespace FairyShooter
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            IsMouseVisible = true;
             base.Initialize();
         }
 

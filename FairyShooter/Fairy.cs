@@ -8,46 +8,59 @@ namespace FairyShooter
     {
         private readonly Rectangle _screenBounds;
 
-        public Fairy(Texture2D texture, Vector2 location,Rectangle screenBounds) : base(texture, location)
+        public Fairy(Texture2D texture, Vector2 location, Rectangle screenBounds) : base(texture, location)
         {
             _screenBounds = screenBounds;
 
-            location.Y = screenBounds.Height - texture.Bounds.Height;
-            location.X = (float)screenBounds.Width / 2;
+            Location.Y = screenBounds.Height - texture.Bounds.Height;
+            Location.X = (float)screenBounds.Width / 2;
         }
 
         public override void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                Velocity.X = -3f;
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                Velocity.X = 3f;
+            {
+                Velocity = new Vector2(-3f, 0);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                Velocity = new Vector2(3f, 0);
+            }
+            else
+            {
+                Velocity = new Vector2(0, 0);
+            }
 
             base.Update(gameTime);
         }
 
+        protected override void CheckBounds()
+        {
+            Location.X = MathHelper.Clamp(Location.X, 0, _screenBounds.Width - Texture.Width);
+        }
     }
 
-    public class Sprite
+    public abstract class Sprite
     {
         protected readonly Texture2D Texture;
         public Vector2 Location;
-        protected Vector2 Velocity;
+        public Vector2 Velocity { get; protected set; }
 
         public int Height
         {
             get { return Texture.Bounds.Height; }
         }
 
-        public int Width {
+        public int Width
+        {
             get
             {
                 return Texture.Bounds.Width;
             }
 
-       }
+        }
 
-        public Sprite(Texture2D texture, Vector2 location)
+        protected Sprite(Texture2D texture, Vector2 location)
         {
             Texture = texture;
             Location = location;
@@ -61,6 +74,9 @@ namespace FairyShooter
         public virtual void Update(GameTime gameTime)
         {
             Location += Velocity;
+            CheckBounds();
         }
+
+        protected abstract void CheckBounds();
     }
 }
