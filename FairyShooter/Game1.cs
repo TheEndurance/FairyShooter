@@ -11,6 +11,7 @@ namespace FairyShooter
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private Fairy fairy;
 
         public Game1()
         {
@@ -41,6 +42,7 @@ namespace FairyShooter
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            fairy = new Fairy(Content.Load<Texture2D>("Fairy"), Vector2.Zero, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
         }
 
         /// <summary>
@@ -63,6 +65,7 @@ namespace FairyShooter
                 Exit();
 
             // TODO: Add your update logic here
+            fairy.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -76,7 +79,9 @@ namespace FairyShooter
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            fairy.Draw(spriteBatch);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
