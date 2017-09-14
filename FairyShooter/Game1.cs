@@ -52,21 +52,21 @@ namespace FairyShooter
 
             //setup managers
             projectiles = new List<Projectile>();
+            projectileManager = new ProjectileManager(projectiles, Content.Load<Texture2D>("projectile"));
             gameObjects = new GameObjects
             {
                 Fairy = fairy,
-                Projectiles = projectiles,
-                ProjectileTexture = Content.Load<Texture2D>("projectile")
+                ProjectileManager = projectileManager
             };
-            projectileManager = new ProjectileManager(gameObjects);
-            
 
 
-            fairy = new Fairy(Content.Load<Texture2D>("Fairy"), Vector2.Zero, gameBounds,projectileManager);
-         
 
 
-          
+            fairy = new Fairy(Content.Load<Texture2D>("Fairy"), Vector2.Zero, gameBounds, projectileManager);
+
+
+
+
         }
 
         /// <summary>

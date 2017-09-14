@@ -7,8 +7,8 @@ namespace FairyShooter
     {
         protected readonly Texture2D Texture;
         public Vector2 Location;
-        protected Rectangle GameBounds { get; }
-        public Vector2 Velocity { get; protected set; }
+        public Rectangle GameBounds { get; }
+        public Vector2 Velocity { get; set; }
 
         public int Height => Texture.Bounds.Height;
 
@@ -23,10 +23,8 @@ namespace FairyShooter
             GameBounds = gameBounds;
         }
 
-        public void Draw(SpriteBatch spritebatch)
-        {
-            spritebatch.Draw(Texture, Location, Color.White);
-        }
+        public abstract void Draw(SpriteBatch spritebatch);
+
 
         public virtual void Update(GameTime gameTime, GameObjects gameObjects)
         {

@@ -39,12 +39,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Fairy.cs" />
+    <Compile Include="FairyMovementBehaviour.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameObjects.cs" />
+    <Compile Include="MovementBehaviour.cs" />
+    <Compile Include="NormalShootingBehaviour.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="ProjectileManager.cs" />
+    <Compile Include="ProjectileType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegularProjectileMovement.cs" />
+    <Compile Include="ShootingBehaviour.cs" />
     <Compile Include="Sprite.cs" />
   </ItemGroup>
   <ItemGroup>
