@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FairyShooter
 {
@@ -12,6 +14,9 @@ namespace FairyShooter
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private Fairy fairy;
+        private IList<Projectile> projectiles;
+        private GameObjects gameObjects;
+        private ProjectileManager projectileManager;
 
         public Game1()
         {
@@ -41,8 +46,27 @@ namespace FairyShooter
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+
             // TODO: use this.Content to load your game content here
-            fairy = new Fairy(Content.Load<Texture2D>("Fairy"), Vector2.Zero, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
+            var gameBounds = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
+
+            //setup managers
+            projectiles = new List<Projectile>();
+            gameObjects = new GameObjects
+            {
+                Fairy = fairy,
+                Projectiles = projectiles,
+                ProjectileTexture = Content.Load<Texture2D>("projectile")
+            };
+            projectileManager = new ProjectileManager(gameObjects);
+            
+
+
+            fairy = new Fairy(Content.Load<Texture2D>("Fairy"), Vector2.Zero, gameBounds,projectileManager);
+         
+
+
+          
         }
 
         /// <summary>
@@ -65,7 +89,12 @@ namespace FairyShooter
                 Exit();
 
             // TODO: Add your update logic here
-            fairy.Update(gameTime);
+            fairy.Update(gameTime, gameObjects);
+            foreach (var projectile in projectiles.ToList())
+            {
+                projectile.Update(gameTime, gameObjects);
+            }
+
 
             base.Update(gameTime);
         }
@@ -81,6 +110,10 @@ namespace FairyShooter
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             fairy.Draw(spriteBatch);
+            foreach (var projectile in projectiles.ToList())
+            {
+                projectile.Draw(spriteBatch);
+            }
             spriteBatch.End();
             base.Draw(gameTime);
         }
