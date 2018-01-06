@@ -12,7 +12,7 @@ namespace FairyShooter
         public IMovementBehaviour MovementBehaviour { get; set; }
         public IShootingBehaviour ShootingBehaviour { get; set; }
 
-        public Fairy(Texture2D texture, Vector2 position, Rectangle screenBounds, ProjectileManager projectileManager) : base(texture, position, screenBounds)
+        public Fairy(Texture2D texture, Vector2 position, Rectangle screenBounds, ProjectileManager projectileManager) : base(texture, position, screenBounds,1,4,14)
         {
             _projectileManager = projectileManager;
             Position.Y = GameBounds.Height - Height;
@@ -23,7 +23,7 @@ namespace FairyShooter
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(Texture, Position, Color.White);
+            base.Draw(spritebatch);
         }
 
         public override void Update(GameTime gameTime, GameObjects gameObjects)

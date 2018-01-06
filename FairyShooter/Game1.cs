@@ -60,11 +60,7 @@ namespace FairyShooter
             };
 
 
-
-
-            fairy = new Fairy(Content.Load<Texture2D>("Fairy"), Vector2.Zero, gameBounds, projectileManager);
-
-
+            fairy = new Fairy(Content.Load<Texture2D>("phoenix"), Vector2.Zero, gameBounds, projectileManager);
 
 
         }
