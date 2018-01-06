@@ -20,7 +20,7 @@ namespace FairyShooter
             if (projectileType == ProjectileType.Regular)
             {
                 Projectiles.Add(new Projectile(ProjectileTexture,
-                    new Vector2(X + Width / 2, Y), GameBounds,new RegularProjectileMovement()));
+                    new Vector2(X + Width/2.6f, Y), GameBounds,new RegularProjectileMovement()));
             }
         }
     }

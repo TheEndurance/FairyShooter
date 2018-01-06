@@ -17,6 +17,8 @@ namespace FairyShooter
         private IList<Projectile> projectiles;
         private GameObjects gameObjects;
         private ProjectileManager projectileManager;
+        private EnemyManager _enemyManager;
+        private Enemy _someEnemy;
 
         public Game1()
         {
@@ -52,16 +54,17 @@ namespace FairyShooter
 
             //setup managers
             projectiles = new List<Projectile>();
-            projectileManager = new ProjectileManager(projectiles, Content.Load<Texture2D>("projectile"));
+            projectileManager = new ProjectileManager(projectiles, Content.Load<Texture2D>("purpleprojectile"));
             gameObjects = new GameObjects
             {
                 Fairy = fairy,
                 ProjectileManager = projectileManager
             };
 
-
+            _enemyManager = new EnemyManager(Content.Load<Texture2D>("tealenemy"), gameBounds);
             fairy = new Fairy(Content.Load<Texture2D>("phoenix"), Vector2.Zero, gameBounds, projectileManager);
 
+            _enemyManager.CreateEnemy();
 
         }
 
@@ -86,6 +89,7 @@ namespace FairyShooter
 
             // TODO: Add your update logic here
             fairy.Update(gameTime, gameObjects);
+            _enemyManager.Update(gameTime, gameObjects);
             foreach (var projectile in projectiles.ToList())
             {
                 projectile.Update(gameTime, gameObjects);
@@ -106,6 +110,8 @@ namespace FairyShooter
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             fairy.Draw(spriteBatch);
+
+            _enemyManager.Draw(spriteBatch);
             foreach (var projectile in projectiles.ToList())
             {
                 projectile.Draw(spriteBatch);

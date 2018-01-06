@@ -10,14 +10,19 @@ namespace FairyShooter
 {
     public class Enemy : Sprite
     {
+
         public bool Alive { get; set; }
         public IMovementBehaviour MovementBehaviour { get; set; }
 
-
-        public Enemy(Texture2D texture, Vector2 position, Rectangle gameBounds,IMovementBehaviour movementBehaviour) : base(texture, position, gameBounds)
+        public Enemy(Texture2D texture, Vector2 position, Rectangle screenBounds,IMovementBehaviour movementBehaviour) : base(texture, position, screenBounds,1,3,10)
         {
             Alive = true;
             MovementBehaviour = movementBehaviour;
+        }
+
+        public override void Draw(SpriteBatch spritebatch)
+        {
+            base.Draw(spritebatch);
         }
 
         public override void Update(GameTime gameTime, GameObjects gameObjects)
@@ -26,17 +31,13 @@ namespace FairyShooter
             {
                 MovementBehaviour.Move(gameTime, this);
             }
-            base.Update(gameTime, gameObjects);
-        }
 
-        public override void Draw(SpriteBatch spritebatch)
-        {
-            spritebatch.Draw(Texture, Position, Color.White);
-           
+            base.Update(gameTime, gameObjects);
         }
 
         protected override void CheckBounds()
         {
+            Position.X = MathHelper.Clamp(Position.X, 0, GameBounds.Width - Width);
         }
     }
 }

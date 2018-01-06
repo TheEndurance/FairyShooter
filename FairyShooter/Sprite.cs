@@ -7,50 +7,50 @@ namespace FairyShooter
     public abstract class Sprite
     {
         protected readonly Texture2D Texture;
+
         public Vector2 Position;
         public Rectangle GameBounds { get; }
         public Vector2 Velocity { get; set; }
-        public int Height => Texture.Bounds.Height/_rows;
-        private int _columns;
-        private int _rows;
-        private int _totalFrames;
-        private int currentFrame;
-      
-        private double _framesPerSecond;
-        private double _timeSinceLastFrame;
-
-        public int Width => Texture.Bounds.Width/_columns;
-
+        public int Height => Texture.Bounds.Height/Rows;
+        public int Columns { get; set; }
+        public int Rows { get; set; }
+        public int TotalFrames { get; set; }
+        public double FramesPerSecond { get; set; }
+        public int Width => Texture.Bounds.Width / Columns;
         public Rectangle BoundingBox => new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
 
-        protected Sprite(Texture2D texture, Vector2 position, Rectangle gameBounds) : this (texture,position,gameBounds,1,1,1)
+        private double _timeSinceLastFrame;
+        private int _currentFrame;
+
+
+        public Sprite(Texture2D texture, Vector2 position, Rectangle gameBounds) : this (texture,position,gameBounds,1,1,1)
         {
             
         }
 
-        protected Sprite(Texture2D texture, Vector2 position, Rectangle gameBounds, int rows, int columns,
+        public Sprite(Texture2D texture, Vector2 position, Rectangle gameBounds, int rows, int columns,
             double framesPerSecond)
         {
             Texture = texture;
             Position = position;
             GameBounds = gameBounds;
-            _rows = rows;
-            _columns = columns;
-            _framesPerSecond = framesPerSecond;
-            _totalFrames = rows * columns;
+            Rows = rows;
+            Columns = columns;
+            FramesPerSecond = framesPerSecond;
+            TotalFrames = rows * columns;
         }
 
 
         public virtual void Draw(SpriteBatch spritebatch)
         {
             
-            int imageWidth = Texture.Width / _columns;
-            int imageHeight = Texture.Height / _rows;
+            int imageWidth = Texture.Width / Columns;
+            int imageHeight = Texture.Height / Rows;
 
-            int currentRow = currentFrame / _columns;
-            int currentColumn = currentFrame % _columns;
+            int currentRow = _currentFrame / Columns;
+            int currentColumn = _currentFrame % Columns;
 
-            Rectangle sourceRectangle = new Rectangle(imageWidth * currentColumn, imageWidth * currentRow, imageWidth,
+            Rectangle sourceRectangle = new Rectangle(imageWidth * currentColumn, imageHeight * currentRow, imageWidth,
                 imageHeight);
 
             Rectangle destinationRectangle = new Rectangle((int) Position.X, (int) Position.Y, imageWidth, imageHeight);
@@ -73,17 +73,17 @@ namespace FairyShooter
             _timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
             if (_timeSinceLastFrame > SecondsBetweenFrames())
             {
-                currentFrame++;
+                _currentFrame++;
                 _timeSinceLastFrame = 0;
             }
 
-            if (currentFrame == _totalFrames)
-                currentFrame = 0;
+            if (_currentFrame == TotalFrames)
+                _currentFrame = 0;
         }
 
         private double SecondsBetweenFrames()
         {
-            return 1 / _framesPerSecond;
+            return 1 / FramesPerSecond;
         }
     }
 }
