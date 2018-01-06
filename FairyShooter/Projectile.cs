@@ -7,7 +7,7 @@ namespace FairyShooter
     {
         private bool alive;
         public IMovementBehaviour MovementBehaviour { get; set; }
-        public Projectile(Texture2D texture, Vector2 location, Rectangle screenBounds,IMovementBehaviour movementBehaviour) : base(texture, location, screenBounds)
+        public Projectile(Texture2D texture, Vector2 position, Rectangle screenBounds,IMovementBehaviour movementBehaviour) : base(texture, position, screenBounds)
         {
             alive = true;
             MovementBehaviour = movementBehaviour;
@@ -20,15 +20,15 @@ namespace FairyShooter
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(Texture, Location, Color.White);
+            spritebatch.Draw(Texture, Position, Color.White);
         }
 
         public override void Update(GameTime gameTime, GameObjects gameObjects)
         {
             if (alive)
             {
-                MovementBehaviour.Move(this);
-                if (Location.Y < 0)
+                MovementBehaviour.Move(gameTime,this);
+                if (Position.Y < 0)
                 {
                     alive = false;
                 }

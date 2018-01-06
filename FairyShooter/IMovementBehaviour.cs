@@ -4,6 +4,6 @@ namespace FairyShooter
 {
     public interface IMovementBehaviour
     {
-        void Move(Sprite sprite);
+        void Move(GameTime gameTime,Sprite sprite);
     }
 }

@@ -6,7 +6,7 @@ namespace FairyShooter
     public abstract class Sprite
     {
         protected readonly Texture2D Texture;
-        public Vector2 Location;
+        public Vector2 Position;
         public Rectangle GameBounds { get; }
         public Vector2 Velocity { get; set; }
 
@@ -14,12 +14,12 @@ namespace FairyShooter
 
         public int Width => Texture.Bounds.Width;
 
-        public Rectangle BoundingBox => new Rectangle((int)Location.X, (int)Location.Y, Width, Height);
+        public Rectangle BoundingBox => new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
 
-        protected Sprite(Texture2D texture, Vector2 location, Rectangle gameBounds)
+        protected Sprite(Texture2D texture, Vector2 position, Rectangle gameBounds)
         {
             Texture = texture;
-            Location = location;
+            Position = position;
             GameBounds = gameBounds;
         }
 
@@ -28,7 +28,7 @@ namespace FairyShooter
 
         public virtual void Update(GameTime gameTime, GameObjects gameObjects)
         {
-            Location += Velocity;
+            Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             CheckBounds();
         }
 
