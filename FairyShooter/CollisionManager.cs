@@ -33,9 +33,17 @@ namespace FairyShooter
             for (var i = 0; i < _gameObjects.ProjectileManager.EnemyProjectiles.Count; i++)
             {
                 Projectile projectile = _gameObjects.ProjectileManager.EnemyProjectiles[i];
-                if (projectile.BoundingBox.Intersects(_gameObjects.Fairy.BoundingBox) && projectile.Shooter is Enemy)
+                Fairy fairy = _gameObjects.Fairy;
+                if (projectile.BoundingBox.Intersects(fairy.BoundingBox) 
+                    && !fairy.IsDead
+                    && projectile.Shooter is Enemy)
                 {
-                    _gameObjects.Fairy.Hit();
+                    fairy.Hit();
+                    if (fairy.IsDead)
+                    {
+                        _gameObjects.ExplosionManager.CreateExplosion(fairy);
+                    }
+                    _gameObjects.ProjectileManager.RemoveEnemyProjectile(projectile);
                 }
             }
            
@@ -55,6 +63,7 @@ namespace FairyShooter
                         && projectile.Shooter is Fairy)
                     {
                         enemy.Hit();
+                        _gameObjects.ProjectileManager.RemovePlayerProjectile(projectile);
                         if (enemy.IsDead)
                         {
                             _gameObjects.ExplosionManager.CreateExplosion(enemy);

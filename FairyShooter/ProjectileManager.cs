@@ -41,6 +41,16 @@ namespace FairyShooter
             EnemyProjectiles.Add(projectile);
         }
 
+        public void RemovePlayerProjectile(Projectile projectile)
+        {
+            PlayerProjectiles.Remove(projectile);
+        }
+
+        public void RemoveEnemyProjectile(Projectile projectile)
+        {
+            EnemyProjectiles.Remove(projectile);
+        }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {

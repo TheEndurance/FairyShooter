@@ -66,10 +66,6 @@ namespace FairyShooter
             _gameObjects.ExplosionManager = _explosionManager;
 
 
-            _enemyManager.CreateEnemy();
-            _enemyManager.CreateEnemy();
-            _enemyManager.CreateEnemy();
-
 
         }
 

@@ -12,6 +12,8 @@ namespace FairyShooter
     {
         private readonly Texture2D _texture;
         private readonly Rectangle _gameBounds;
+        public TimeSpan SpawnInterval { get; set; }
+        private TimeSpan? _lastSpawn;
         public IList<Enemy> Enemies { get; set; }
 
         public EnemyManager(Texture2D texture, Rectangle gameBounds)
@@ -19,7 +21,8 @@ namespace FairyShooter
             Enemies = new List<Enemy>();
             _texture = texture;
             _gameBounds = gameBounds;
-            CreateEnemy();
+            SpawnInterval = TimeSpan.FromSeconds(1);
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -35,6 +38,15 @@ namespace FairyShooter
 
         public void Update(GameTime gameTime,GameObjects gameObjects)
         {
+
+
+            if (_lastSpawn == null || gameTime.TotalGameTime - _lastSpawn >= SpawnInterval)
+            {
+                CreateEnemy();
+                _lastSpawn = gameTime.TotalGameTime;
+
+            }
+
             for (var index = 0; index < Enemies.Count; index++)
             {
 
@@ -49,6 +61,7 @@ namespace FairyShooter
             }
         }
 
+        //TODO: Pass in Movement and Shooting Behaviours from LevelManager
         public void CreateEnemy()
         {
             Vector2 position = RandomPosition();
@@ -59,8 +72,8 @@ namespace FairyShooter
         private Vector2 RandomPosition()
         {
             var random = new Random();
-            var xPosition = random.Next(_gameBounds.Width - _texture.Width + 1);
-            return new Vector2(xPosition, 20);
+            var xPosition = random.Next(_gameBounds.Width - _texture.Width/2 + 1);
+            return new Vector2(xPosition, -10);
 
         }
     }
