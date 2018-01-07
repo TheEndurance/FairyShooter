@@ -21,7 +21,10 @@ namespace FairyShooter
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            base.Draw(spritebatch);
+            if (!IsDead)
+            {
+                base.Draw(spritebatch);
+            }
         }
 
         public override void Update(GameTime gameTime, GameObjects gameObjects)

@@ -25,11 +25,8 @@ namespace FairyShooter
             Vector2 shotLocation = new Vector2(shooter.Position.X + shooter.Width / 2.6f, shooter.Position.Y);
             Projectile projectile = new Projectile(_projectileTexture, shotLocation, shooter, shooter.GameBounds);
 
-            switch (projectileType)
-            {
-                case ProjectileType.Regular:
-                    break;
-            }
+            SetProjectileMovementBehaviour(projectileType, projectile);
+
             PlayerProjectiles.Add(projectile);
         }
 
@@ -39,14 +36,19 @@ namespace FairyShooter
             Vector2 shotLocation = new Vector2(shooter.Position.X + shooter.Width / 2.6f, shooter.Position.Y);
             Projectile projectile = new Projectile(_projectileTexture, shotLocation, shooter, shooter.GameBounds);
 
-            switch (projectileType)
-            {
-                case ProjectileType.Regular:
-                    break;
-            }
+            SetProjectileMovementBehaviour(projectileType, projectile);
+           
             EnemyProjectiles.Add(projectile);
         }
 
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (var projectile in AllProjectiles)
+            {
+                projectile.Draw(spriteBatch);
+            }
+        }
 
 
         public void Update(GameTime gameTime, GameObjects gameObjects)
@@ -60,6 +62,22 @@ namespace FairyShooter
             RemoveOutOfBoundsProjectiles(EnemyProjectiles);
         }
 
+
+        private void SetProjectileMovementBehaviour(ProjectileType projectileType,Projectile projectile)
+        {
+            IMovementBehaviour projectileMovementBehaviour;
+
+            switch (projectileType)
+            {
+                case ProjectileType.Slow:
+                    projectileMovementBehaviour = new SlowProjectileMovement();
+                    break;
+                default:
+                    return;
+            }
+            projectile.MovementBehaviour = projectileMovementBehaviour;
+        }
+
         private void RemoveOutOfBoundsProjectiles(IList<Projectile> projectiles)
         {
             for (int i = 0; i < projectiles.Count; i++)
@@ -71,12 +89,7 @@ namespace FairyShooter
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            foreach (var projectile in AllProjectiles)
-            {
-                projectile.Draw(spriteBatch);
-            }
-        }
+
+
     }
 }

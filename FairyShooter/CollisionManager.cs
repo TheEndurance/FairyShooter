@@ -9,15 +9,11 @@ namespace FairyShooter
 {
     public class CollisionManager
     {
-        private Fairy _fairy;
-        private ProjectileManager _projectileManager;
-        private EnemyManager _enemyManager;
+        private readonly GameObjects _gameObjects;
 
-        public CollisionManager(Fairy fairy, ProjectileManager projectileManager, EnemyManager enemyManager)
+        public CollisionManager(GameObjects gameObjects)
         {
-            _fairy = fairy;
-            _projectileManager = projectileManager;
-            _enemyManager = enemyManager;
+            _gameObjects = gameObjects;
         }
 
         public void Update(GameTime gameTime)
@@ -28,27 +24,44 @@ namespace FairyShooter
         private void CheckCollisions()
         {
             CheckShotToPlayer();
+            CheckShotToEnemy();
         }
 
         private void CheckShotToPlayer()
         {
 
-            foreach (var projectile in _projectileManager.AllProjectiles)
+            for (var i = 0; i < _gameObjects.ProjectileManager.EnemyProjectiles.Count; i++)
             {
-                if (projectile.BoundingBox.Intersects(_fairy.BoundingBox) & projectile.Shooter is Enemy)
+                Projectile projectile = _gameObjects.ProjectileManager.EnemyProjectiles[i];
+                if (projectile.BoundingBox.Intersects(_gameObjects.Fairy.BoundingBox) && projectile.Shooter is Enemy)
                 {
-                    _fairy.Hit();
+                    _gameObjects.Fairy.Hit();
                 }
-                foreach (var enemy in _enemyManager.Enemies)
-                {
-                    if (projectile.BoundingBox.Intersects(enemy.BoundingBox) & projectile.Shooter is Fairy)
-                    {
-                        enemy.Hit();
-                    }
-                }
-                
             }
            
+        }
+
+        private void CheckShotToEnemy()
+        {
+            for (var i = 0; i < _gameObjects.ProjectileManager.PlayerProjectiles.Count; i++) {
+                Projectile projectile = _gameObjects.ProjectileManager.PlayerProjectiles[i];
+
+
+                for (var j = 0; j < _gameObjects.EnemyManager.Enemies.Count; j++)
+                {
+                    Enemy enemy = _gameObjects.EnemyManager.Enemies[j];
+                    if (projectile.BoundingBox.Intersects(enemy.BoundingBox)
+                        && !enemy.IsDead
+                        && projectile.Shooter is Fairy)
+                    {
+                        enemy.Hit();
+                        if (enemy.IsDead)
+                        {
+                            _gameObjects.ExplosionManager.CreateExplosion(enemy);
+                        }
+                    }
+                }
+            }
         }
     }
 }

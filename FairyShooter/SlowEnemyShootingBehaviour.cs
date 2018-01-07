@@ -23,10 +23,10 @@ namespace FairyShooter
         {
             if (!shooter.IsDead)
             {
-                ShootInterval = TimeSpan.FromMilliseconds(_random.Next(500, 10000));
+                ShootInterval = TimeSpan.FromMilliseconds(_random.Next(2500, 10000));
                 if (LastProjectileShot == null || gameTime.TotalGameTime - LastProjectileShot >= ShootInterval)
                 {
-                    projectileManager.EnemyShoot(ProjectileType.Regular, shooter);
+                    projectileManager.EnemyShoot(ProjectileType.Slow, shooter);
                     LastProjectileShot = gameTime.TotalGameTime;
                 }
             }

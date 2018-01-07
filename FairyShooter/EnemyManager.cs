@@ -33,12 +33,19 @@ namespace FairyShooter
             }
         }
 
-
         public void Update(GameTime gameTime,GameObjects gameObjects)
         {
-            foreach (Enemy enemy in Enemies)
+            for (var index = 0; index < Enemies.Count; index++)
             {
-                enemy.Update(gameTime, gameObjects);
+
+                if (!Enemies[index].IsDead)
+                {
+                    Enemies[index].Update(gameTime, gameObjects);
+                }
+                else
+                {
+                    Enemies.Remove(Enemies[index]);
+                }
             }
         }
 

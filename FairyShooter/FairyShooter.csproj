@@ -42,6 +42,8 @@
     <Compile Include="EasyEnemyMovementBehaviour.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="EnemyManager.cs" />
+    <Compile Include="Explosion.cs" />
+    <Compile Include="ExplosionManager.cs" />
     <Compile Include="Fairy.cs" />
     <Compile Include="FairyMovementBehaviour.cs" />
     <Compile Include="Game1.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="RegularProjectileMovement.cs" />
     <Compile Include="IShootingBehaviour.cs" />
     <Compile Include="SlowEnemyShootingBehaviour.cs" />
+    <Compile Include="SlowProjectileMovement.cs" />
     <Compile Include="Sprite.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +81,9 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\explosion.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\Fairy.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

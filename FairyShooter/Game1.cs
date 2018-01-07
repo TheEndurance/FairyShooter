@@ -19,7 +19,8 @@ namespace FairyShooter
         private ProjectileManager _projectileManager;
         private CollisionManager _collisionManager;
         private EnemyManager _enemyManager;
-   
+        private ExplosionManager _explosionManager;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -51,24 +52,24 @@ namespace FairyShooter
 
             // TODO: use this.Content to load your game content here
             var gameBounds = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
-
+            _gameObjects = new GameObjects();
             //setup managers
             _projectileManager = new ProjectileManager(Content.Load<Texture2D>("purpleprojectile"));
-            _gameObjects = new GameObjects
-            {
-                Fairy = _fairy,
-                ProjectileManager = _projectileManager,
-                EnemyManager = _enemyManager,
-                CollisionManager = _collisionManager
-
-            };
-
             _enemyManager = new EnemyManager(Content.Load<Texture2D>("tealenemy"), gameBounds);
             _fairy = new Fairy(Content.Load<Texture2D>("phoenix"), Vector2.Zero, gameBounds);
+            _collisionManager = new CollisionManager(_gameObjects);
+            _explosionManager = new ExplosionManager(Content.Load<Texture2D>("explosion"), gameBounds);
+            _gameObjects.Fairy = _fairy;
+            _gameObjects.CollisionManager = _collisionManager;
+            _gameObjects.ProjectileManager = _projectileManager;
+            _gameObjects.EnemyManager = _enemyManager;
+            _gameObjects.ExplosionManager = _explosionManager;
 
-            _collisionManager = new CollisionManager(_fairy, _projectileManager, _enemyManager);
 
             _enemyManager.CreateEnemy();
+            _enemyManager.CreateEnemy();
+            _enemyManager.CreateEnemy();
+
 
         }
 
@@ -95,6 +96,7 @@ namespace FairyShooter
             _fairy.Update(gameTime, _gameObjects);
             _enemyManager.Update(gameTime, _gameObjects);
             _projectileManager.Update(gameTime, _gameObjects);
+            _explosionManager.Update(gameTime, _gameObjects);
             _collisionManager.Update(gameTime);
 
             base.Update(gameTime);
@@ -107,16 +109,14 @@ namespace FairyShooter
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-           
+
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            if (!_fairy.IsDead)
-            {
-                _fairy.Draw(_spriteBatch);
-            }
-       
+
+            _fairy.Draw(_spriteBatch);
             _projectileManager.Draw(_spriteBatch);
             _enemyManager.Draw(_spriteBatch);
+            _explosionManager.Draw(_spriteBatch);
 
             _spriteBatch.End();
             base.Draw(gameTime);

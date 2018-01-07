@@ -25,6 +25,7 @@ namespace FairyShooter
         public int Width => Texture.Bounds.Width / Columns;
         public Rectangle BoundingBox => new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
         public bool IsDead { get; set; }
+        protected bool AnimationOncePlayed;
 
         private double _timeSinceLastFrame;
         private int _currentFrame;
@@ -86,7 +87,10 @@ namespace FairyShooter
             }
 
             if (_currentFrame == TotalFrames)
+            {
                 _currentFrame = 0;
+                AnimationOncePlayed = true;
+            }
         }
 
         private double SecondsBetweenFrames()

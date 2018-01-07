@@ -2,6 +2,7 @@
 {
     public enum ProjectileType
     {
-        Regular
+        Regular,
+        Slow
     }
 }
