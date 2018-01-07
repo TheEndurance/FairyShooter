@@ -8,5 +8,7 @@
         }
         public Fairy Fairy { get; set; }
         public ProjectileManager ProjectileManager { get; set; }
+        public EnemyManager EnemyManager { get; set; }
+        public CollisionManager CollisionManager { get; set; }
     }
 }

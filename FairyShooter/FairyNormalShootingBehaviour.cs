@@ -4,11 +4,11 @@ using System;
 
 namespace FairyShooter
 {
-    public class NormalShootingBehaviour : IShootingBehaviour
+    public class FairyNormalShootingBehaviour : IShootingBehaviour
     {
         public TimeSpan ShootInterval { get; }
         public TimeSpan? LastProjectileShot { get; set; }
-        public NormalShootingBehaviour()
+        public FairyNormalShootingBehaviour()
         {
             ShootInterval = TimeSpan.FromMilliseconds(255);
             LastProjectileShot = null;
@@ -17,10 +17,10 @@ namespace FairyShooter
 
         public void Shoot(GameTime gameTime, ProjectileManager projectileManager, Sprite shooter)
         {
-           
+           if (!shooter.IsDead)
                 if (LastProjectileShot == null || gameTime.TotalGameTime - LastProjectileShot >= ShootInterval)
                 {
-                    projectileManager.Shoot(ProjectileType.Regular, shooter.Position.X, shooter.Position.Y, shooter.Width, shooter.Height, shooter.GameBounds);
+                    projectileManager.Shoot(ProjectileType.Regular, shooter);
                     LastProjectileShot = gameTime.TotalGameTime;
                 }
            

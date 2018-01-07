@@ -26,7 +26,10 @@ namespace FairyShooter
         {
             foreach (Enemy enemy in Enemies)
             {
-                enemy.Draw(spriteBatch);
+                if (!enemy.IsDead)
+                {
+                    enemy.Draw(spriteBatch);
+                }
             }
         }
 

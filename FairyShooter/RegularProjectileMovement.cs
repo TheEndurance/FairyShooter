@@ -6,7 +6,7 @@ namespace FairyShooter
     {
         public void Move(GameTime gameTime,Sprite sprite)
         {
-            sprite.Position += (new Vector2(0, -600f) * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            sprite.Velocity = new Vector2(0, 600f * sprite.Direction);
         }
     }
 }

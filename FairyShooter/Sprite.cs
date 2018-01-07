@@ -8,6 +8,12 @@ namespace FairyShooter
     {
         protected readonly Texture2D Texture;
 
+        public int Direction
+        {
+            get { return _direction; }
+            set { _direction = value; }
+        }
+
         public Vector2 Position;
         public Rectangle GameBounds { get; }
         public Vector2 Velocity { get; set; }
@@ -18,9 +24,11 @@ namespace FairyShooter
         public double FramesPerSecond { get; set; }
         public int Width => Texture.Bounds.Width / Columns;
         public Rectangle BoundingBox => new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+        public bool IsDead { get; set; }
 
         private double _timeSinceLastFrame;
         private int _currentFrame;
+        private int _direction = -1;
 
 
         public Sprite(Texture2D texture, Vector2 position, Rectangle gameBounds) : this (texture,position,gameBounds,1,1,1)

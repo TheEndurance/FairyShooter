@@ -7,18 +7,16 @@ namespace FairyShooter
 {
     public class Fairy : Sprite
     {
-        private readonly ProjectileManager _projectileManager;
        
         public IMovementBehaviour MovementBehaviour { get; set; }
         public IShootingBehaviour ShootingBehaviour { get; set; }
 
-        public Fairy(Texture2D texture, Vector2 position, Rectangle screenBounds, ProjectileManager projectileManager) : base(texture, position, screenBounds,1,4,14)
+        public Fairy(Texture2D texture, Vector2 position, Rectangle gameBounds) : base(texture, position, gameBounds, 1,4,14)
         {
-            _projectileManager = projectileManager;
             Position.Y = GameBounds.Height - Height;
             Position.X = (float)GameBounds.Width / 2;
             MovementBehaviour = new FairyMovementBehaviour();
-            ShootingBehaviour = new NormalShootingBehaviour();
+            ShootingBehaviour = new FairyNormalShootingBehaviour();
         }
 
         public override void Draw(SpriteBatch spritebatch)
@@ -33,7 +31,7 @@ namespace FairyShooter
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                ShootingBehaviour.Shoot(gameTime, _projectileManager, this);
+                ShootingBehaviour.Shoot(gameTime, gameObjects.ProjectileManager, this);
             }
 
             base.Update(gameTime, gameObjects);
@@ -43,5 +41,12 @@ namespace FairyShooter
         {
             Position.X = MathHelper.Clamp(Position.X, 0, GameBounds.Width - Width);
         }
+
+        public void Hit()
+        {
+            IsDead = true;
+        }
+
+       
     }
 }
