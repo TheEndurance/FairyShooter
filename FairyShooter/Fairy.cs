@@ -40,11 +40,6 @@ namespace FairyShooter
             base.Update(gameTime, gameObjects);
         }
 
-        protected override void CheckBounds()
-        {
-            Position.X = MathHelper.Clamp(Position.X, 0, GameBounds.Width - Width);
-        }
-
         public void Hit()
         {
             IsDead = true;

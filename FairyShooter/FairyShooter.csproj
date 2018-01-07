@@ -48,8 +48,11 @@
     <Compile Include="FairyMovementBehaviour.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameObjects.cs" />
+    <Compile Include="GameOverState.cs" />
+    <Compile Include="GameState.cs" />
     <Compile Include="IMovementBehaviour.cs" />
     <Compile Include="FairyNormalShootingBehaviour.cs" />
+    <Compile Include="PlayingState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="ProjectileManager.cs" />
@@ -60,6 +63,7 @@
     <Compile Include="SlowEnemyShootingBehaviour.cs" />
     <Compile Include="SlowProjectileMovement.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="TitleScreenState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -69,22 +73,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Fairy.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\projectile.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\animatedgameover.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\animatedtitlescreen.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\explosion.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\Fairy.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\paused.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\phoenix.xnb">

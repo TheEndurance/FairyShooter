@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace FairyShooter
 {
-    public abstract class Sprite
+    public class Sprite
     {
         protected readonly Texture2D Texture;
 
@@ -70,12 +70,20 @@ namespace FairyShooter
 
         public virtual void Update(GameTime gameTime, GameObjects gameObjects)
         {
+            Update(gameTime);
+        }
+
+        public virtual void Update(GameTime gameTime)
+        {
             Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             CheckBounds();
             UpdateAnimation(gameTime);
         }
 
-        protected abstract void CheckBounds();
+        protected virtual void CheckBounds()
+        {
+            Position.X = MathHelper.Clamp(Position.X, 0, GameBounds.Width - Width);
+        }
 
         private void UpdateAnimation(GameTime gameTime)
         {
