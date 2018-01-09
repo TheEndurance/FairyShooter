@@ -23,6 +23,12 @@ namespace FairyShooter
         public EnemyManager EnemyManager;
         public ExplosionManager ExplosionManager;
         public GameState GameState;
+        public StatusManager GameStatusManager;
+        public KeyboardState CurrentKeyboardState;
+        public KeyboardState PreviousKeyboardState;
+        public SpriteFont GameFont;
+        public int Score;
+        public Rectangle GameBounds;
 
         public Game1()
         {
@@ -55,27 +61,28 @@ namespace FairyShooter
             // Create a new SpriteBatch, which can be used to draw textures.
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-
-            // TODO: use this.Content to load your game content here
-            var gameBounds = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
+            
+            GameBounds = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
             GameObjects = new GameObjects();
             //setup managers
-            TitleScreen = new Sprite(Content.Load<Texture2D>("animatedtitlescreen"), Vector2.Zero, gameBounds,2,2,8);
-            GameOverScreen = new Sprite(Content.Load<Texture2D>("animatedgameover"), Vector2.Zero, gameBounds,1,5,8);
-            PausedScreen = new Sprite(Content.Load<Texture2D>("paused"), Vector2.Zero, gameBounds);
+            TitleScreen = new Sprite(Content.Load<Texture2D>("animatedtitlescreen"), Vector2.Zero, GameBounds,2,2,8);
+            GameOverScreen = new Sprite(Content.Load<Texture2D>("animatedgameover"), Vector2.Zero, GameBounds,1,5,8);
+            PausedScreen = new Sprite(Content.Load<Texture2D>("paused"), Vector2.Zero, GameBounds);
             ProjectileManager = new ProjectileManager(Content.Load<Texture2D>("purpleprojectile"));
-            EnemyManager = new EnemyManager(Content.Load<Texture2D>("tealenemy"), gameBounds);
-            Fairy = new Fairy(Content.Load<Texture2D>("phoenix"), Vector2.Zero, gameBounds);
+            EnemyManager = new EnemyManager(Content.Load<Texture2D>("tealenemy"), GameBounds);
+            Fairy = new Fairy(Content.Load<Texture2D>("phoenix"), Vector2.Zero, GameBounds);
             CollisionManager = new CollisionManager(GameObjects);
-            ExplosionManager = new ExplosionManager(Content.Load<Texture2D>("explosion"), gameBounds);
+            ExplosionManager = new ExplosionManager(Content.Load<Texture2D>("explosion"), GameBounds);
+
             GameObjects.Fairy = Fairy;
             GameObjects.CollisionManager = CollisionManager;
             GameObjects.ProjectileManager = ProjectileManager;
             GameObjects.EnemyManager = EnemyManager;
             GameObjects.ExplosionManager = ExplosionManager;
+            
 
-
-
+            GameFont = Content.Load<SpriteFont>("GameFont");
+            GameStatusManager = new StatusManager(GameFont,GameBounds,EnemyManager);
         }
 
         /// <summary>
@@ -97,10 +104,13 @@ namespace FairyShooter
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            CurrentKeyboardState = Keyboard.GetState(PlayerIndex.One);
             GameState.Update(gameTime, GameObjects);
-
+            PreviousKeyboardState = CurrentKeyboardState;
             base.Update(gameTime);
         }
+
+     
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -110,12 +120,15 @@ namespace FairyShooter
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
             _spriteBatch.Begin();
             GameState.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
 
+        public void ResetGame()
+        {
+            this.LoadContent();
+        }
     }
 }

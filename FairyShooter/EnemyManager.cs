@@ -76,5 +76,10 @@ namespace FairyShooter
             return new Vector2(xPosition, -10);
 
         }
+
+        public int GetKillCount()
+        {
+            return Enemies.Count(e => e.IsDead);
+        }
     }
 }

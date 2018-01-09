@@ -29,7 +29,6 @@ namespace FairyShooter
 
         private void CheckShotToPlayer()
         {
-
             for (var i = 0; i < _gameObjects.ProjectileManager.EnemyProjectiles.Count; i++)
             {
                 Projectile projectile = _gameObjects.ProjectileManager.EnemyProjectiles[i];
@@ -46,7 +45,6 @@ namespace FairyShooter
                     _gameObjects.ProjectileManager.RemoveEnemyProjectile(projectile);
                 }
             }
-           
         }
 
         private void CheckShotToEnemy()

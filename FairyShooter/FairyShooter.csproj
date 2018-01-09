@@ -49,6 +49,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameObjects.cs" />
     <Compile Include="GameOverState.cs" />
+    <Compile Include="GamePausedState.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="IMovementBehaviour.cs" />
     <Compile Include="FairyNormalShootingBehaviour.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="SlowEnemyShootingBehaviour.cs" />
     <Compile Include="SlowProjectileMovement.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="StatusManager.cs" />
     <Compile Include="TitleScreenState.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +91,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\Fairy.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\GameFont.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\paused.xnb">

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace FairyShooter
 {
@@ -17,18 +18,27 @@ namespace FairyShooter
             Game.ProjectileManager.Update(gameTime, Game.GameObjects);
             Game.ExplosionManager.Update(gameTime, Game.GameObjects);
             Game.CollisionManager.Update(gameTime);
-            if (Game.Fairy.IsDead)
+            Game.GameStatusManager.UpdateScore();
+            
+            if (Game.CurrentKeyboardState.IsKeyDown(Keys.P) && !Game.PreviousKeyboardState.IsKeyDown(Keys.P))
+            {
+                Game.GameState = new GamePausedState(Game);
+            }
+            if (Game.Fairy.IsDead && Game.GameState.GetType()!=typeof(GameOverState))
             {
                 Game.GameState = new GameOverState(Game);
             }
         }
-
+        
         public override void Draw(SpriteBatch spriteBatch)
         {
             Game.Fairy.Draw(spriteBatch);
             Game.ProjectileManager.Draw(spriteBatch);
             Game.EnemyManager.Draw(spriteBatch);
             Game.ExplosionManager.Draw(spriteBatch);
+            Game.GameStatusManager.Draw(spriteBatch);
         }
+
+
     }
 }
