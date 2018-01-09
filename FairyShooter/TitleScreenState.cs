@@ -17,6 +17,15 @@ namespace FairyShooter
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
                 Game.GameState = new PlayingState(Game);
+            } else if (Keyboard.GetState().IsKeyDown(Keys.H))
+            {
+                Game.GameState = new HelpState(Game);
+            } else if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                Game.GameState = new AboutState(Game);
+            } else if (Game.CurrentKeyboardState.IsKeyDown(Keys.Escape) && !Game.PreviousKeyboardState.IsKeyDown(Keys.Escape))
+            {
+                Game.Exit();
             }
         }
 

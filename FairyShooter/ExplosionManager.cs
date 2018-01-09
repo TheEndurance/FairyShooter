@@ -12,13 +12,15 @@ namespace FairyShooter
     {
         private readonly Texture2D _explosionTexture;
         private readonly Rectangle _gameBounds;
+        private readonly SoundManager _soundManager;
         private IList<Explosion> _explosions = new List<Explosion>();
 
 
-        public ExplosionManager(Texture2D explosionTexture,Rectangle gameBounds)
+        public ExplosionManager(Texture2D explosionTexture,Rectangle gameBounds,SoundManager soundManager)
         {
             _explosionTexture = explosionTexture;
             _gameBounds = gameBounds;
+            _soundManager = soundManager;
         }
 
         public void CreateExplosion(Sprite sprite)
@@ -28,6 +30,8 @@ namespace FairyShooter
             Explosion explosion = new Explosion(_explosionTexture, centerOfSprite, _gameBounds);
             explosion.Position -= new Vector2(explosion.Width / 2, explosion.Height / 2);
             _explosions.Add(explosion);
+
+            _soundManager.PlayBoomEffect();
         }
 
         public void Draw(SpriteBatch spriteBatch)

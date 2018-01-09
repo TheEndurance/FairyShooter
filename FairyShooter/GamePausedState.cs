@@ -18,6 +18,10 @@ namespace FairyShooter
             {
                 Game.GameState = new PlayingState(Game);
             }
+            else if (Game.CurrentKeyboardState.IsKeyDown(Keys.Escape) && !Game.PreviousKeyboardState.IsKeyDown(Keys.Escape))
+            {
+                Game.Exit();
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

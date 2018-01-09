@@ -10,13 +10,15 @@ namespace FairyShooter
         private double elapsedTime;
         public GameOverState(Game1 game) : base(game)
         {
+            Game.SoundManager.StopPlayingBackgroundMusic();
+            Game.SoundManager.PlayGameOverEffect();
         }
 
         public override void Update(GameTime gameTime, GameObjects gameObjects)
         {
             base.Update(gameTime, gameObjects);
+            
             elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
-           
             Game.GameOverScreen.Update(gameTime);
             if (elapsedTime >= gameOverDuration.TotalSeconds)
             {

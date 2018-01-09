@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AboutState.cs" />
     <Compile Include="CollisionManager.cs" />
     <Compile Include="EasyEnemyMovementBehaviour.cs" />
     <Compile Include="Enemy.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="GameState.cs" />
     <Compile Include="IMovementBehaviour.cs" />
     <Compile Include="FairyNormalShootingBehaviour.cs" />
+    <Compile Include="HelpState.cs" />
     <Compile Include="PlayingState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projectile.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="IShootingBehaviour.cs" />
     <Compile Include="SlowEnemyShootingBehaviour.cs" />
     <Compile Include="SlowProjectileMovement.cs" />
+    <Compile Include="SoundManager.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="StatusManager.cs" />
     <Compile Include="TitleScreenState.cs" />
@@ -81,12 +84,14 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\about.xnb" />
     <None Include="Content\animatedgameover.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\animatedtitlescreen.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\enemyprojectile.xnb" />
     <None Include="Content\explosion.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -96,6 +101,7 @@
     <None Include="Content\GameFont.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\howtoplay.xnb" />
     <None Include="Content\paused.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -106,6 +112,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\purpleprojectile.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\sounds\boom.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\sounds\gamemusic.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\sounds\gameover.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\sounds\laser.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\tealenemy.xnb">

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework.Content;
 
 namespace FairyShooter
 {
@@ -10,34 +11,39 @@ namespace FairyShooter
     {
         public IList<Projectile> PlayerProjectiles = new List<Projectile>();
         public IList<Projectile> EnemyProjectiles = new List<Projectile>();
-
-        public IEnumerable<Projectile> AllProjectiles => EnemyProjectiles.Union(PlayerProjectiles);
-
-        private readonly Texture2D _projectileTexture;
-
-        public ProjectileManager(Texture2D ProjectileTexture)
+        public IEnumerable<Projectile> AllProjectiles
         {
-            _projectileTexture = ProjectileTexture;
+            get { return EnemyProjectiles.Union(PlayerProjectiles); }
+        }
+
+        private Texture2D playerProjectileTexture;
+        private Texture2D enemyProjectileTexture;
+        private readonly Texture2D _projectileTexture;
+        private readonly SoundManager _soundManager;
+
+        public ProjectileManager(ContentManager content,SoundManager soundManager)
+        {
+            enemyProjectileTexture = content.Load<Texture2D>("enemyprojectile");
+            playerProjectileTexture = content.Load<Texture2D>("purpleprojectile");
+            _soundManager = soundManager;
         }
 
         public void Shoot(ProjectileType projectileType, Sprite shooter)
         {
             Vector2 shotLocation = new Vector2(shooter.Position.X + shooter.Width / 2.6f, shooter.Position.Y);
-            Projectile projectile = new Projectile(_projectileTexture, shotLocation, shooter, shooter.GameBounds);
-
+            Projectile projectile = new Projectile(playerProjectileTexture, shotLocation, shooter, shooter.GameBounds,4,1,14);
             SetProjectileMovementBehaviour(projectileType, projectile);
-
             PlayerProjectiles.Add(projectile);
+
+            _soundManager.PlayLaserEffect();
         }
 
         public void EnemyShoot(ProjectileType projectileType, Sprite shooter)
         {
 
             Vector2 shotLocation = new Vector2(shooter.Position.X + shooter.Width / 2.6f, shooter.Position.Y);
-            Projectile projectile = new Projectile(_projectileTexture, shotLocation, shooter, shooter.GameBounds);
-
+            Projectile projectile = new Projectile(enemyProjectileTexture, shotLocation, shooter, shooter.GameBounds,3,1,14);
             SetProjectileMovementBehaviour(projectileType, projectile);
-           
             EnemyProjectiles.Add(projectile);
         }
 

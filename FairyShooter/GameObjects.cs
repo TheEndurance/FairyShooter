@@ -11,5 +11,6 @@
         public EnemyManager EnemyManager { get; set; }
         public CollisionManager CollisionManager { get; set; }
         public ExplosionManager ExplosionManager { get; set; }
+        public SoundManager SoundManager { get; set; }
     }
 }

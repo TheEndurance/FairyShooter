@@ -7,7 +7,7 @@ namespace FairyShooter
     {
         public Sprite Shooter{ get; private set; }
         public IMovementBehaviour MovementBehaviour { get; set; }
-        public Projectile(Texture2D texture, Vector2 position, Sprite shooter, Rectangle gameBounds) : base(texture, position, gameBounds, 4,1,20)
+        public Projectile(Texture2D texture, Vector2 position, Sprite shooter, Rectangle gameBounds,int row = 1,int column = 1,int framePerSecond = 1) : base(texture, position, gameBounds, row,column,framePerSecond)
         {
             Shooter = shooter;
             Direction = shooter.Direction;

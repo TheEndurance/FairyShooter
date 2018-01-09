@@ -16,12 +16,15 @@ namespace FairyShooter
         public Sprite TitleScreen;
         public Sprite GameOverScreen;
         public Sprite PausedScreen;
+        public Sprite HelpScreen;
+        public Sprite AboutScreen;
         public Fairy Fairy;
         public GameObjects GameObjects;
         public ProjectileManager ProjectileManager;
         public CollisionManager CollisionManager;
         public EnemyManager EnemyManager;
         public ExplosionManager ExplosionManager;
+        public SoundManager SoundManager;
         public GameState GameState;
         public StatusManager GameStatusManager;
         public KeyboardState CurrentKeyboardState;
@@ -64,25 +67,30 @@ namespace FairyShooter
             
             GameBounds = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
             GameObjects = new GameObjects();
-            //setup managers
+            SoundManager = new SoundManager(Content);
             TitleScreen = new Sprite(Content.Load<Texture2D>("animatedtitlescreen"), Vector2.Zero, GameBounds,2,2,8);
             GameOverScreen = new Sprite(Content.Load<Texture2D>("animatedgameover"), Vector2.Zero, GameBounds,1,5,8);
             PausedScreen = new Sprite(Content.Load<Texture2D>("paused"), Vector2.Zero, GameBounds);
-            ProjectileManager = new ProjectileManager(Content.Load<Texture2D>("purpleprojectile"));
+            HelpScreen = new Sprite(Content.Load<Texture2D>("howtoplay"), Vector2.Zero, GameBounds);
+            AboutScreen = new Sprite(Content.Load<Texture2D>("about"), Vector2.Zero, GameBounds);
+            ProjectileManager = new ProjectileManager(Content,SoundManager);
             EnemyManager = new EnemyManager(Content.Load<Texture2D>("tealenemy"), GameBounds);
             Fairy = new Fairy(Content.Load<Texture2D>("phoenix"), Vector2.Zero, GameBounds);
             CollisionManager = new CollisionManager(GameObjects);
-            ExplosionManager = new ExplosionManager(Content.Load<Texture2D>("explosion"), GameBounds);
+            ExplosionManager = new ExplosionManager(Content.Load<Texture2D>("explosion"), GameBounds,SoundManager);
 
             GameObjects.Fairy = Fairy;
             GameObjects.CollisionManager = CollisionManager;
             GameObjects.ProjectileManager = ProjectileManager;
             GameObjects.EnemyManager = EnemyManager;
             GameObjects.ExplosionManager = ExplosionManager;
+            GameObjects.SoundManager = SoundManager;
             
 
             GameFont = Content.Load<SpriteFont>("GameFont");
             GameStatusManager = new StatusManager(GameFont,GameBounds,EnemyManager);
+
+            SoundManager.PlayBackgroundMusic();
         }
 
         /// <summary>
@@ -101,9 +109,7 @@ namespace FairyShooter
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
+           
             CurrentKeyboardState = Keyboard.GetState(PlayerIndex.One);
             GameState.Update(gameTime, GameObjects);
             PreviousKeyboardState = CurrentKeyboardState;
