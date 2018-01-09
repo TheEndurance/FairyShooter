@@ -1,16 +1,35 @@
-﻿using Microsoft.Xna.Framework;
+﻿/* 
+ * Programmer: Rawa Jalal
+ * Revision History:
+ *          01/03/2017: Created
+ *          
+ */
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace FairyShooter
 {
+    /// <summary>
+    /// Game state for when the game is playing
+    /// </summary>
     public class PlayingState : GameState
     {
+        /// <summary>
+        /// Constructor for the playing state
+        /// </summary>
+        /// <param name="game"></param>
         public PlayingState(Game1 game) : base(game)
         {
             
         }
 
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// <param name="gameObjects">Provides access to game objects</param>
         public override void Update(GameTime gameTime,GameObjects gameObjects)
         {
             Game.Fairy.Update(gameTime, Game.GameObjects);
@@ -33,7 +52,11 @@ namespace FairyShooter
                 Game.Exit();
             }
         }
-        
+
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="spriteBatch">Helper class for drawing sprites and text</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             Game.Fairy.Draw(spriteBatch);

@@ -99,7 +99,7 @@ namespace FairyShooter
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+
         }
 
         /// <summary>
@@ -116,8 +116,6 @@ namespace FairyShooter
             base.Update(gameTime);
         }
 
-     
-
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -132,6 +130,9 @@ namespace FairyShooter
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Resets the game by calling LoadContent
+        /// </summary>
         public void ResetGame()
         {
             this.LoadContent();

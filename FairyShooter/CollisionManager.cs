@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* 
+ * Programmer: Rawa Jalal
+ * Revision History:
+ *          01/03/2017: Created
+ *          
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,26 +13,44 @@ using Microsoft.Xna.Framework;
 
 namespace FairyShooter
 {
+    /// <summary>
+    /// Manages game collisions
+    /// </summary>
     public class CollisionManager
     {
         private readonly GameObjects _gameObjects;
 
+        /// <summary>
+        /// Constructor for collision manager
+        /// </summary>
+        /// <param name="gameObjects"></param>
         public CollisionManager(GameObjects gameObjects)
         {
             _gameObjects = gameObjects;
         }
 
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void Update(GameTime gameTime)
         {
             CheckCollisions();
         }
 
+        /// <summary>
+        /// Checks for collisions
+        /// </summary>
         private void CheckCollisions()
         {
             CheckShotToPlayer();
             CheckShotToEnemy();
         }
 
+        /// <summary>
+        /// Checks for shots that hit player
+        /// </summary>
         private void CheckShotToPlayer()
         {
             for (var i = 0; i < _gameObjects.ProjectileManager.EnemyProjectiles.Count; i++)
@@ -47,6 +71,9 @@ namespace FairyShooter
             }
         }
 
+        /// <summary>
+        /// Checks for shots that hit enemy
+        /// </summary>
         private void CheckShotToEnemy()
         {
             for (var i = 0; i < _gameObjects.ProjectileManager.PlayerProjectiles.Count; i++) {

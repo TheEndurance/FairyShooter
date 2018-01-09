@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* 
+ * Programmer: Rawa Jalal
+ * Revision History:
+ *          01/03/2017: Created
+ *          
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +13,9 @@ using Microsoft.Xna.Framework;
 
 namespace FairyShooter
 {
+    /// <summary>
+    /// Slow enemy shooting behaviour
+    /// </summary>
     public class SlowEnemyShootingBehaviour : IShootingBehaviour
     {
 
@@ -15,6 +24,10 @@ namespace FairyShooter
         private Random _random;
         private int lowerBound;
         private int upperBound;
+
+        /// <summary>
+        /// Constructor for slow enemy shooting behaviour
+        /// </summary>
         public SlowEnemyShootingBehaviour()
         {
             LastProjectileShot = null;
@@ -23,6 +36,12 @@ namespace FairyShooter
             upperBound = 10000;
         }
 
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="projectileManager"></param>
+        /// <param name="shooter"></param>
         public void Shoot(GameTime gameTime, ProjectileManager projectileManager, Sprite shooter)
         {
             if (!shooter.IsDead)

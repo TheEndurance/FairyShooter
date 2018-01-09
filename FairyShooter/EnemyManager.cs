@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* 
+ * Programmer: Rawa Jalal
+ * Revision History:
+ *          01/03/2017: Created
+ *          
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +14,23 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace FairyShooter
 {
+    /// <summary>
+    /// Manages enemies
+    /// </summary>
     public class EnemyManager
     {
+        
+        public TimeSpan SpawnInterval { get; set; }
+        public IList<Enemy> Enemies { get; set; }
         private readonly Texture2D _texture;
         private readonly Rectangle _gameBounds;
-        public TimeSpan SpawnInterval { get; set; }
         private TimeSpan? _lastSpawn;
-        public IList<Enemy> Enemies { get; set; }
 
+        /// <summary>
+        /// constructor for the enemy manager
+        /// </summary>
+        /// <param name="texture"></param>
+        /// <param name="gameBounds"></param>
         public EnemyManager(Texture2D texture, Rectangle gameBounds)
         {
             Enemies = new List<Enemy>();
@@ -25,6 +40,10 @@ namespace FairyShooter
 
         }
 
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="spriteBatch">Helper class for drawing game sprites and text.</param>
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (Enemy enemy in Enemies)
@@ -36,17 +55,20 @@ namespace FairyShooter
             }
         }
 
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// <param name="gameObjects">Provides access to game objects</param>
         public void Update(GameTime gameTime,GameObjects gameObjects)
         {
-
-
             if (_lastSpawn == null || gameTime.TotalGameTime - _lastSpawn >= SpawnInterval)
             {
                 CreateEnemy();
                 _lastSpawn = gameTime.TotalGameTime;
 
             }
-
             for (var index = 0; index < Enemies.Count; index++)
             {
 
@@ -61,7 +83,9 @@ namespace FairyShooter
             }
         }
 
-        //TODO: Pass in Movement and Shooting Behaviours from LevelManager
+        /// <summary>
+        /// Creates an enemy
+        /// </summary>
         public void CreateEnemy()
         {
             Vector2 position = RandomPosition();
@@ -69,6 +93,10 @@ namespace FairyShooter
             Enemies.Add(enemy);
         }
 
+        /// <summary>
+        /// Creates a random position
+        /// </summary>
+        /// <returns>A random Vector2 position</returns>
         private Vector2 RandomPosition()
         {
             var random = new Random();
@@ -77,6 +105,10 @@ namespace FairyShooter
 
         }
 
+        /// <summary>
+        /// Determines how many enemies killed in the current update cycle
+        /// </summary>
+        /// <returns>Kill count</returns>
         public int GetKillCount()
         {
             return Enemies.Count(e => e.IsDead);
